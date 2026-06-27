@@ -26,6 +26,14 @@ export default function Root({ children }: PropsWithChildren) {
               * {
                 box-sizing: border-box;
               }
+              input, textarea {
+                color: #1A2138;
+                -webkit-text-fill-color: #1A2138;
+              }
+              input::placeholder, textarea::placeholder {
+                color: #9BA8C0;
+                opacity: 1;
+              }
             `,
           }}
         />

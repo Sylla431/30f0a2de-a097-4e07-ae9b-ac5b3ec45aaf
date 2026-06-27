@@ -6,9 +6,9 @@ import {
   TouchableOpacity,
   TextInput,
   ScrollView,
-  Alert,
   Platform,
   ActivityIndicator,
+  Pressable,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '@/constants/Colors';
@@ -19,22 +19,36 @@ interface AuthScreenProps {
   subtitle?: string;
 }
 
+type Feedback = {
+  type: 'error' | 'success' | 'info';
+  message: string;
+};
+
 export function AuthScreen({
   subtitle = 'Connectez-vous pour accéder à la vigilance inondations',
 }: AuthScreenProps) {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [feedback, setFeedback] = useState<Feedback | null>(null);
+
+  const clearFeedback = useCallback(() => setFeedback(null), []);
 
   const handleAuth = useCallback(async () => {
     if (!email.trim() || !password.trim()) {
-      Alert.alert('Champs requis', 'Veuillez remplir tous les champs.');
+      setFeedback({
+        type: 'error',
+        message: 'Veuillez remplir tous les champs.',
+      });
       return;
     }
 
     try {
       setLoading(true);
+      setFeedback(null);
+
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
@@ -47,15 +61,26 @@ export function AuthScreen({
           password,
         });
         if (error) throw error;
-        Alert.alert('Compte créé', 'Votre compte a été créé avec succès.');
+        setFeedback({
+          type: 'success',
+          message: 'Compte créé avec succès. Vous pouvez vous connecter.',
+        });
+        setIsLogin(true);
+        setPassword('');
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erreur d'authentification";
-      Alert.alert('Erreur', message);
+      setFeedback({ type: 'error', message });
     } finally {
       setLoading(false);
     }
   }, [email, password, isLogin]);
+
+  const toggleMode = useCallback(() => {
+    setIsLogin((prev) => !prev);
+    setFeedback(null);
+    setPassword('');
+  }, []);
 
   return (
     <ScrollView
@@ -73,6 +98,46 @@ export function AuthScreen({
           </Text>
         </View>
 
+        {feedback ? (
+          <View
+            style={[
+              styles.feedback,
+              feedback.type === 'error' && styles.feedbackError,
+              feedback.type === 'success' && styles.feedbackSuccess,
+              feedback.type === 'info' && styles.feedbackInfo,
+            ]}
+            accessibilityRole="alert"
+          >
+            <Ionicons
+              name={
+                feedback.type === 'error'
+                  ? 'alert-circle'
+                  : feedback.type === 'success'
+                    ? 'checkmark-circle'
+                    : 'information-circle'
+              }
+              size={20}
+              color={
+                feedback.type === 'error'
+                  ? Colors.critical
+                  : feedback.type === 'success'
+                    ? Colors.success
+                    : Colors.primary
+              }
+            />
+            <Text
+              style={[
+                styles.feedbackText,
+                feedback.type === 'error' && styles.feedbackTextError,
+                feedback.type === 'success' && styles.feedbackTextSuccess,
+                feedback.type === 'info' && styles.feedbackTextInfo,
+              ]}
+            >
+              {feedback.message}
+            </Text>
+          </View>
+        ) : null}
+
         <View style={styles.form}>
           <Text style={styles.label}>Email</Text>
           <TextInput
@@ -80,22 +145,45 @@ export function AuthScreen({
             placeholder="votre@email.com"
             placeholderTextColor={Colors.textTertiary}
             value={email}
-            onChangeText={setEmail}
+            onChangeText={(text) => {
+              setEmail(text);
+              if (feedback) clearFeedback();
+            }}
             keyboardType="email-address"
             autoCapitalize="none"
             autoComplete="email"
+            autoCorrect={false}
           />
 
           <Text style={styles.label}>Mot de passe</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Votre mot de passe"
-            placeholderTextColor={Colors.textTertiary}
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-            autoComplete="password"
-          />
+          <View style={styles.passwordRow}>
+            <TextInput
+              style={styles.passwordInput}
+              placeholder="Votre mot de passe"
+              placeholderTextColor={Colors.textTertiary}
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (feedback) clearFeedback();
+              }}
+              secureTextEntry={!showPassword}
+              autoComplete="password"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <Pressable
+              style={styles.passwordToggle}
+              onPress={() => setShowPassword((prev) => !prev)}
+              accessibilityLabel={showPassword ? 'Masquer le mot de passe' : 'Afficher le mot de passe'}
+              accessibilityRole="button"
+            >
+              <Ionicons
+                name={showPassword ? 'eye-off-outline' : 'eye-outline'}
+                size={22}
+                color={Colors.textSecondary}
+              />
+            </Pressable>
+          </View>
 
           <TouchableOpacity
             style={[styles.button, loading && { opacity: 0.6 }]}
@@ -114,7 +202,7 @@ export function AuthScreen({
 
           <TouchableOpacity
             style={styles.toggle}
-            onPress={() => setIsLogin(!isLogin)}
+            onPress={toggleMode}
             activeOpacity={0.7}
           >
             <Text style={styles.toggleText}>
@@ -191,6 +279,78 @@ const styles = StyleSheet.create({
     color: Colors.text,
     borderWidth: 1,
     borderColor: Colors.border,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        caretColor: Colors.primary,
+      } as object,
+      default: {},
+    }),
+  },
+  passwordRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: Colors.background,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.border,
+    overflow: 'hidden',
+  },
+  passwordInput: {
+    flex: 1,
+    padding: 14,
+    paddingRight: 8,
+    fontFamily: Fonts.regular,
+    fontSize: 15,
+    color: Colors.text,
+    ...Platform.select({
+      web: {
+        outlineStyle: 'none',
+        caretColor: Colors.primary,
+      } as object,
+      default: {},
+    }),
+  },
+  passwordToggle: {
+    paddingHorizontal: 14,
+    paddingVertical: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  feedback: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  feedbackError: {
+    backgroundColor: `${Colors.critical}10`,
+    borderColor: `${Colors.critical}40`,
+  },
+  feedbackSuccess: {
+    backgroundColor: `${Colors.success}10`,
+    borderColor: `${Colors.success}40`,
+  },
+  feedbackInfo: {
+    backgroundColor: `${Colors.primary}10`,
+    borderColor: `${Colors.primary}40`,
+  },
+  feedbackText: {
+    flex: 1,
+    fontFamily: Fonts.medium,
+    fontSize: 14,
+    lineHeight: 20,
+  },
+  feedbackTextError: {
+    color: Colors.critical,
+  },
+  feedbackTextSuccess: {
+    color: Colors.success,
+  },
+  feedbackTextInfo: {
+    color: Colors.primaryDark,
   },
   button: {
     backgroundColor: Colors.primary,
