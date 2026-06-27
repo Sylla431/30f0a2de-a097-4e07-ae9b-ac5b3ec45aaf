@@ -16,7 +16,7 @@ Projet soumis au **IA Challenge** — thème : *collecter, structurer et exploit
 
 **Alert'I** transforme le savoir local en intelligence actionnable grâce à une architecture **multi-agents** : collecte terrain → structuration institutionnelle → orientation citoyenne par IA → alerte précoce.
 
-Chaque réponse de l'assistant **Aminata** s'appuie sur des fiches communautaires **validées** et cite ses sources — pas de boîte noire.
+Chaque réponse de l'assistant **Aminata** s'appuie sur des fiches communautaires **validées** et cite ses sources.
 
 ---
 
