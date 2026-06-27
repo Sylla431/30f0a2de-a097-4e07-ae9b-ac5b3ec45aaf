@@ -68,37 +68,33 @@ export default function MapScreen() {
       setLoading(true);
       setError(null);
 
-      // Fetch from the unified carte_markers_v view (combines community_knowledge + sos_signals)
-      const markersRes = await withTimeout(
+      const [markersResult, floodResult] = await Promise.allSettled([
+        withTimeout(
+          supabase.from('carte_markers_v').select('*').then((res) => res),
+          15000,
+          'Le chargement des données de la carte prend trop de temps. Vérifiez votre connexion et réessayez.'
+        ),
         supabase
-          .from('carte_markers_v')
+          .from('flood_events')
           .select('*')
-          .then((res) => res),
-        15000,
-        'Le chargement des données de la carte prend trop de temps. Vérifiez votre connexion et réessayez.'
-      );
+          .order('event_date', { ascending: false })
+          .limit(50),
+      ]);
 
+      if (markersResult.status === 'rejected') {
+        throw markersResult.reason;
+      }
+
+      const markersRes = markersResult.value;
       if (markersRes.error) {
         throw new Error(markersRes.error.message || 'Erreur carte_markers_v');
       }
 
       setMarkers(Array.isArray(markersRes.data) ? (markersRes.data as CarteMarker[]) : []);
 
-      // Fetch flood_events separately (optional — don't crash if unavailable)
-      try {
-        const floodRes = await supabase
-          .from('flood_events')
-          .select('*')
-          .order('event_date', { ascending: false })
-          .limit(50);
-
-        if (!floodRes.error && Array.isArray(floodRes.data)) {
-          setFloodData(floodRes.data);
-        } else {
-          setFloodData([]);
-        }
-      } catch {
-        // flood_events table may not exist or be inaccessible — gracefully degrade
+      if (floodResult.status === 'fulfilled' && !floodResult.value.error && Array.isArray(floodResult.value.data)) {
+        setFloodData(floodResult.value.data);
+      } else {
         setFloodData([]);
       }
     } catch (err) {

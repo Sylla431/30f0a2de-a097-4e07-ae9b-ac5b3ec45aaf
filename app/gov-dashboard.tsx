@@ -217,61 +217,49 @@ export default function GovDashboardScreen() {
       setLoading(true);
       setError(null);
 
-      // Charger SOS
-      const sosRes = await withTimeout(
-        supabase.from('sos_signals').select('*').order('created_at', { ascending: false }),
-        10000,
-        'Délai de chargement dépassé'
-      );
-      
-      // Charger Capteurs (table facultative, gestion en fallback)
-      let sensorsData: Sensor[] = [];
-      try {
-        const sensRes = await supabase.from('sensors').select('*').order('nom', { ascending: true });
-        if (!sensRes.error && sensRes.data && sensRes.data.length > 0) {
-          sensorsData = sensRes.data as Sensor[];
-        } else {
-          sensorsData = MOCK_SENSORS;
-        }
-      } catch {
-        sensorsData = MOCK_SENSORS;
+      const [sosResult, sensorsResult, knowResult] = await Promise.allSettled([
+        withTimeout(
+          supabase.from('sos_signals').select('*').order('created_at', { ascending: false }),
+          10000,
+          'Délai de chargement dépassé'
+        ),
+        supabase.from('sensors').select('*').order('nom', { ascending: true }),
+        supabase.from('community_knowledge').select('*').order('created_at', { ascending: false }),
+      ]);
+
+      let sosData: SosSignal[] = MOCK_SOS;
+      if (sosResult.status === 'fulfilled' && !sosResult.value.error && sosResult.value.data?.length) {
+        sosData = sosResult.value.data as SosSignal[];
       }
+      setSosSignals(sosData);
 
-      // Charger Savoirs
-      const knowRes = await supabase.from('community_knowledge').select('*').order('created_at', { ascending: false });
-
-      // Traitement SOS
-      if (!sosRes.error && sosRes.data && sosRes.data.length > 0) {
-        setSosSignals(sosRes.data as SosSignal[]);
-      } else {
-        setSosSignals(MOCK_SOS);
+      let sensorsData: Sensor[] = MOCK_SENSORS;
+      if (
+        sensorsResult.status === 'fulfilled' &&
+        !sensorsResult.value.error &&
+        sensorsResult.value.data?.length
+      ) {
+        sensorsData = sensorsResult.value.data as Sensor[];
       }
-
-      // Traitement Capteurs
       setSensors(sensorsData);
 
-      // Traitement Savoirs
-      if (!knowRes.error && knowRes.data && knowRes.data.length > 0) {
-        setKnowledge(knowRes.data as CommunityKnowledge[]);
+      if (knowResult.status === 'fulfilled' && !knowResult.value.error && knowResult.value.data?.length) {
+        setKnowledge(knowResult.value.data as CommunityKnowledge[]);
       } else {
         setKnowledge(MOCK_KNOWLEDGE);
       }
 
-      // Initialiser les statuts locaux
       const initialStatuses: Record<string, 'nouveau' | 'en_cours' | 'resolu'> = {};
-      const actualSos = (!sosRes.error && sosRes.data && sosRes.data.length > 0) ? (sosRes.data as any[]) : MOCK_SOS;
-      actualSos.forEach((s) => {
-        initialStatuses[s.id] = s.statut || 'nouveau';
+      sosData.forEach((s) => {
+        initialStatuses[s.id] = (s as SosSignal & { statut?: 'nouveau' | 'en_cours' | 'resolu' }).statut || 'nouveau';
       });
       setSosStatuses(initialStatuses);
-
     } catch (err: unknown) {
-      console.warn("Supabase fetch failed, falling back to mock datasets.", err);
-      // Mocks en secours
+      console.warn('Supabase fetch failed, falling back to mock datasets.', err);
       setSosSignals(MOCK_SOS);
       setSensors(MOCK_SENSORS);
       setKnowledge(MOCK_KNOWLEDGE);
-      
+
       const initialStatuses: Record<string, 'nouveau' | 'en_cours' | 'resolu'> = {};
       MOCK_SOS.forEach((s) => {
         initialStatuses[s.id] = 'nouveau';
