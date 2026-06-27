@@ -1,4 +1,5 @@
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
+import { useCallback } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { DashboardColors } from '@/constants/Dashboard';
@@ -11,6 +12,7 @@ import {
 import { Fonts } from '@/constants/Typography';
 import { Colors } from '@/constants/Colors';
 import { AppLogo } from '@/components/app-logo';
+import { supabase } from '@/lib/supabase';
 import { useAppStore } from '@/store/useAppStore';
 
 interface AdminSidebarProps {
@@ -61,11 +63,21 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
   const pathname = usePathname();
   const profile = useAppStore((s) => s.profile);
   const session = useAppStore((s) => s.session);
+  const setSession = useAppStore((s) => s.setSession);
+  const setProfile = useAppStore((s) => s.setProfile);
 
   const navigate = (href: string) => {
     router.push(href as never);
     onNavigate?.();
   };
+
+  const handleLogout = useCallback(async () => {
+    await supabase.auth.signOut();
+    setSession(null);
+    setProfile(null);
+    onNavigate?.();
+    router.replace('/login' as never);
+  }, [setSession, setProfile, router, onNavigate]);
 
   const displayName =
     profile?.nom?.trim() ||
@@ -107,17 +119,27 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
       </ScrollView>
 
       <View style={styles.footer}>
-        <View style={styles.avatar}>
-          <Ionicons name="person" size={16} color={DashboardColors.accent} />
+        <View style={styles.footerUser}>
+          <View style={styles.avatar}>
+            <Ionicons name="person" size={16} color={DashboardColors.accent} />
+          </View>
+          <View style={styles.footerInfo}>
+            <Text style={styles.footerName} numberOfLines={1}>
+              {displayName}
+            </Text>
+            <Text style={styles.footerRole}>
+              {profile?.role === 'admin' ? 'Administrateur' : 'Opérateur terrain'}
+            </Text>
+          </View>
         </View>
-        <View style={styles.footerInfo}>
-          <Text style={styles.footerName} numberOfLines={1}>
-            {displayName}
-          </Text>
-          <Text style={styles.footerRole}>
-            {profile?.role === 'admin' ? 'Administrateur' : 'Opérateur terrain'}
-          </Text>
-        </View>
+        <TouchableOpacity
+          style={styles.logoutButton}
+          onPress={handleLogout}
+          activeOpacity={0.75}
+        >
+          <Ionicons name="log-out-outline" size={18} color={DashboardColors.danger} />
+          <Text style={styles.logoutButtonText}>Déconnexion</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -231,12 +253,15 @@ const styles = StyleSheet.create({
     color: Colors.white,
   },
   footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
     paddingTop: 16,
     marginTop: 8,
     borderTopWidth: 1,
     borderTopColor: DashboardColors.sidebarBorder,
+    gap: 12,
+  },
+  footerUser: {
+    flexDirection: 'row',
+    alignItems: 'center',
     gap: 10,
   },
   avatar: {
@@ -260,5 +285,22 @@ const styles = StyleSheet.create({
     fontSize: 11,
     color: DashboardColors.sidebarMuted,
     marginTop: 2,
+  },
+  logoutButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    backgroundColor: `${DashboardColors.danger}10`,
+    borderWidth: 1,
+    borderColor: `${DashboardColors.danger}30`,
+  },
+  logoutButtonText: {
+    fontFamily: Fonts.semiBold,
+    fontSize: 13,
+    color: DashboardColors.danger,
   },
 });

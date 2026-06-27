@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": 1782572447953,
+  "generatedAt": 1782577097625,
   "entries": {
     "renderSignal@app/(tabs)/sos/index.tsx:177": {
       "element": {
@@ -6981,772 +6981,6 @@
               "col": 12,
               "endCol": 14,
               "raw": "88"
-            }
-          }
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:32": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 32
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navItem",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 181,
-          "properties": {
-            "flexDirection": {
-              "line": 182,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 183,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 184,
-              "col": 20,
-              "endCol": 35,
-              "raw": "'space-between'"
-            },
-            "paddingVertical": {
-              "line": 185,
-              "col": 21,
-              "endCol": 23,
-              "raw": "10"
-            },
-            "paddingHorizontal": {
-              "line": 186,
-              "col": 23,
-              "endCol": 25,
-              "raw": "10"
-            },
-            "borderRadius": {
-              "line": 187,
-              "col": 18,
-              "endCol": 20,
-              "raw": "10"
-            },
-            "marginBottom": {
-              "line": 188,
-              "col": 18,
-              "endCol": 19,
-              "raw": "4"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:37": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 37
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navItemLeft",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 195,
-          "properties": {
-            "flexDirection": {
-              "line": 196,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 197,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "gap": {
-              "line": 198,
-              "col": 9,
-              "endCol": 11,
-              "raw": "10"
-            },
-            "flex": {
-              "line": 199,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:43": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 43
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navLabels",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 201,
-          "properties": {
-            "flex": {
-              "line": 202,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "gap": {
-              "line": 203,
-              "col": 9,
-              "endCol": 10,
-              "raw": "2"
-            }
-          }
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:44": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 44
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navLabel",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 205,
-          "properties": {
-            "fontSize": {
-              "line": 207,
-              "col": 14,
-              "endCol": 16,
-              "raw": "14"
-            }
-          }
-        },
-        {
-          "origin": "dynamic",
-          "resolvable": false
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:45": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 45
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navDescription",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 213,
-          "properties": {
-            "fontSize": {
-              "line": 215,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            }
-          }
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:51": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 51
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.badge",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 218,
-          "properties": {
-            "minWidth": {
-              "line": 220,
-              "col": 14,
-              "endCol": 16,
-              "raw": "20"
-            },
-            "height": {
-              "line": 221,
-              "col": 12,
-              "endCol": 14,
-              "raw": "20"
-            },
-            "borderRadius": {
-              "line": 222,
-              "col": 18,
-              "endCol": 20,
-              "raw": "10"
-            },
-            "alignItems": {
-              "line": 223,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 224,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            },
-            "paddingHorizontal": {
-              "line": 225,
-              "col": 23,
-              "endCol": 24,
-              "raw": "6"
-            },
-            "marginLeft": {
-              "line": 226,
-              "col": 16,
-              "endCol": 17,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "NavButton@components/admin/admin-sidebar.tsx:52": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 52
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.badgeText",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 228,
-          "properties": {
-            "fontSize": {
-              "line": 230,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:76": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 76
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.sidebar",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 127,
-          "properties": {
-            "flex": {
-              "line": 128,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            },
-            "width": {
-              "line": 129,
-              "col": 11,
-              "endCol": 17,
-              "raw": "'100%'"
-            },
-            "height": {
-              "line": 130,
-              "col": 12,
-              "endCol": 18,
-              "raw": "'100%'"
-            },
-            "paddingTop": {
-              "line": 132,
-              "col": 16,
-              "endCol": 18,
-              "raw": "16"
-            },
-            "paddingBottom": {
-              "line": 133,
-              "col": 19,
-              "endCol": 21,
-              "raw": "20"
-            },
-            "paddingHorizontal": {
-              "line": 134,
-              "col": 23,
-              "endCol": 25,
-              "raw": "16"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:77": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 77
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.brand",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 136,
-          "properties": {
-            "marginBottom": {
-              "line": 137,
-              "col": 18,
-              "endCol": 20,
-              "raw": "12"
-            },
-            "gap": {
-              "line": 138,
-              "col": 9,
-              "endCol": 10,
-              "raw": "4"
-            },
-            "alignItems": {
-              "line": 139,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:79": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 79
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.brandSubtitle",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 141,
-          "properties": {
-            "fontSize": {
-              "line": 143,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "textAlign": {
-              "line": 145,
-              "col": 15,
-              "endCol": 23,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:82": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 82
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.institution",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 147,
-          "properties": {
-            "paddingHorizontal": {
-              "line": 148,
-              "col": 23,
-              "endCol": 24,
-              "raw": "4"
-            },
-            "paddingBottom": {
-              "line": 149,
-              "col": 19,
-              "endCol": 21,
-              "raw": "16"
-            },
-            "marginBottom": {
-              "line": 150,
-              "col": 18,
-              "endCol": 19,
-              "raw": "8"
-            },
-            "borderBottomWidth": {
-              "line": 151,
-              "col": 23,
-              "endCol": 24,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:83": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 83
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.institutionLabel",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 154,
-          "properties": {
-            "fontSize": {
-              "line": 156,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            },
-            "letterSpacing": {
-              "line": 158,
-              "col": 19,
-              "endCol": 22,
-              "raw": "1.2"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:84": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 84
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.institutionDept",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 160,
-          "properties": {
-            "fontSize": {
-              "line": 162,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "marginTop": {
-              "line": 164,
-              "col": 15,
-              "endCol": 16,
-              "raw": "4"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:87": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 87
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.navScroll",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 166,
-          "properties": {
-            "flex": {
-              "line": 167,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:88": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 88
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.sectionLabel",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 169,
-          "properties": {
-            "fontSize": {
-              "line": 171,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            },
-            "letterSpacing": {
-              "line": 173,
-              "col": 19,
-              "endCol": 20,
-              "raw": "1"
-            },
-            "marginBottom": {
-              "line": 174,
-              "col": 18,
-              "endCol": 19,
-              "raw": "8"
-            },
-            "marginTop": {
-              "line": 175,
-              "col": 15,
-              "endCol": 16,
-              "raw": "4"
-            },
-            "paddingHorizontal": {
-              "line": 176,
-              "col": 23,
-              "endCol": 24,
-              "raw": "8"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:98": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 98
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.sectionLabel",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 169,
-          "properties": {
-            "fontSize": {
-              "line": 171,
-              "col": 14,
-              "endCol": 16,
-              "raw": "10"
-            },
-            "letterSpacing": {
-              "line": 173,
-              "col": 19,
-              "endCol": 20,
-              "raw": "1"
-            },
-            "marginBottom": {
-              "line": 174,
-              "col": 18,
-              "endCol": 19,
-              "raw": "8"
-            },
-            "marginTop": {
-              "line": 175,
-              "col": 15,
-              "endCol": 16,
-              "raw": "4"
-            },
-            "paddingHorizontal": {
-              "line": 176,
-              "col": 23,
-              "endCol": 24,
-              "raw": "8"
-            }
-          }
-        },
-        {
-          "origin": "stylesheet",
-          "ref": "styles.sectionLabelSpaced",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 178,
-          "properties": {
-            "marginTop": {
-              "line": 179,
-              "col": 15,
-              "endCol": 17,
-              "raw": "20"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:109": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 109
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.footer",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 233,
-          "properties": {
-            "flexDirection": {
-              "line": 234,
-              "col": 19,
-              "endCol": 24,
-              "raw": "'row'"
-            },
-            "alignItems": {
-              "line": 235,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "paddingTop": {
-              "line": 236,
-              "col": 16,
-              "endCol": 18,
-              "raw": "16"
-            },
-            "marginTop": {
-              "line": 237,
-              "col": 15,
-              "endCol": 16,
-              "raw": "8"
-            },
-            "borderTopWidth": {
-              "line": 238,
-              "col": 20,
-              "endCol": 21,
-              "raw": "1"
-            },
-            "gap": {
-              "line": 240,
-              "col": 9,
-              "endCol": 11,
-              "raw": "10"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:110": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 110
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.avatar",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 242,
-          "properties": {
-            "width": {
-              "line": 243,
-              "col": 11,
-              "endCol": 13,
-              "raw": "36"
-            },
-            "height": {
-              "line": 244,
-              "col": 12,
-              "endCol": 14,
-              "raw": "36"
-            },
-            "borderRadius": {
-              "line": 245,
-              "col": 18,
-              "endCol": 20,
-              "raw": "18"
-            },
-            "alignItems": {
-              "line": 247,
-              "col": 16,
-              "endCol": 24,
-              "raw": "'center'"
-            },
-            "justifyContent": {
-              "line": 248,
-              "col": 20,
-              "endCol": 28,
-              "raw": "'center'"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:113": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 113
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.footerInfo",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 250,
-          "properties": {
-            "flex": {
-              "line": 251,
-              "col": 10,
-              "endCol": 11,
-              "raw": "1"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:114": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 114
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.footerName",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 253,
-          "properties": {
-            "fontSize": {
-              "line": 255,
-              "col": 14,
-              "endCol": 16,
-              "raw": "13"
-            }
-          }
-        }
-      ]
-    },
-    "AdminSidebar@components/admin/admin-sidebar.tsx:117": {
-      "element": {
-        "file": "components/admin/admin-sidebar.tsx",
-        "line": 117
-      },
-      "styles": [
-        {
-          "origin": "stylesheet",
-          "ref": "styles.footerRole",
-          "file": "components/admin/admin-sidebar.tsx",
-          "defLine": 258,
-          "properties": {
-            "fontSize": {
-              "line": 260,
-              "col": 14,
-              "endCol": 16,
-              "raw": "11"
-            },
-            "marginTop": {
-              "line": 262,
-              "col": 15,
-              "endCol": 16,
-              "raw": "2"
             }
           }
         }
@@ -17945,6 +17179,880 @@
           "properties": {
             "fontSize": {
               "line": 2367,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:34": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 34
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navItem",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 203,
+          "properties": {
+            "flexDirection": {
+              "line": 204,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 205,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 206,
+              "col": 20,
+              "endCol": 35,
+              "raw": "'space-between'"
+            },
+            "paddingVertical": {
+              "line": 207,
+              "col": 21,
+              "endCol": 23,
+              "raw": "10"
+            },
+            "paddingHorizontal": {
+              "line": 208,
+              "col": 23,
+              "endCol": 25,
+              "raw": "10"
+            },
+            "borderRadius": {
+              "line": 209,
+              "col": 18,
+              "endCol": 20,
+              "raw": "10"
+            },
+            "marginBottom": {
+              "line": 210,
+              "col": 18,
+              "endCol": 19,
+              "raw": "4"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:39": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 39
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navItemLeft",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 217,
+          "properties": {
+            "flexDirection": {
+              "line": 218,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 219,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 220,
+              "col": 9,
+              "endCol": 11,
+              "raw": "10"
+            },
+            "flex": {
+              "line": 221,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:45": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 45
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navLabels",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 223,
+          "properties": {
+            "flex": {
+              "line": 224,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 225,
+              "col": 9,
+              "endCol": 10,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:46": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 46
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navLabel",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 227,
+          "properties": {
+            "fontSize": {
+              "line": 229,
+              "col": 14,
+              "endCol": 16,
+              "raw": "14"
+            }
+          }
+        },
+        {
+          "origin": "dynamic",
+          "resolvable": false
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:47": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 47
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navDescription",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 235,
+          "properties": {
+            "fontSize": {
+              "line": 237,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            }
+          }
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:53": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 53
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.badge",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 240,
+          "properties": {
+            "minWidth": {
+              "line": 242,
+              "col": 14,
+              "endCol": 16,
+              "raw": "20"
+            },
+            "height": {
+              "line": 243,
+              "col": 12,
+              "endCol": 14,
+              "raw": "20"
+            },
+            "borderRadius": {
+              "line": 244,
+              "col": 18,
+              "endCol": 20,
+              "raw": "10"
+            },
+            "alignItems": {
+              "line": 245,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 246,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "paddingHorizontal": {
+              "line": 247,
+              "col": 23,
+              "endCol": 24,
+              "raw": "6"
+            },
+            "marginLeft": {
+              "line": 248,
+              "col": 16,
+              "endCol": 17,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "NavButton@components/admin/admin-sidebar.tsx:54": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 54
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.badgeText",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 250,
+          "properties": {
+            "fontSize": {
+              "line": 252,
+              "col": 14,
+              "endCol": 16,
+              "raw": "10"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:88": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 88
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.sidebar",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 149,
+          "properties": {
+            "flex": {
+              "line": 150,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            },
+            "width": {
+              "line": 151,
+              "col": 11,
+              "endCol": 17,
+              "raw": "'100%'"
+            },
+            "height": {
+              "line": 152,
+              "col": 12,
+              "endCol": 18,
+              "raw": "'100%'"
+            },
+            "paddingTop": {
+              "line": 154,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            },
+            "paddingBottom": {
+              "line": 155,
+              "col": 19,
+              "endCol": 21,
+              "raw": "20"
+            },
+            "paddingHorizontal": {
+              "line": 156,
+              "col": 23,
+              "endCol": 25,
+              "raw": "16"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:89": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 89
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.brand",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 158,
+          "properties": {
+            "marginBottom": {
+              "line": 159,
+              "col": 18,
+              "endCol": 20,
+              "raw": "12"
+            },
+            "gap": {
+              "line": 160,
+              "col": 9,
+              "endCol": 10,
+              "raw": "4"
+            },
+            "alignItems": {
+              "line": 161,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:91": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 91
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.brandSubtitle",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 163,
+          "properties": {
+            "fontSize": {
+              "line": 165,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "textAlign": {
+              "line": 167,
+              "col": 15,
+              "endCol": 23,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:94": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 94
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.institution",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 169,
+          "properties": {
+            "paddingHorizontal": {
+              "line": 170,
+              "col": 23,
+              "endCol": 24,
+              "raw": "4"
+            },
+            "paddingBottom": {
+              "line": 171,
+              "col": 19,
+              "endCol": 21,
+              "raw": "16"
+            },
+            "marginBottom": {
+              "line": 172,
+              "col": 18,
+              "endCol": 19,
+              "raw": "8"
+            },
+            "borderBottomWidth": {
+              "line": 173,
+              "col": 23,
+              "endCol": 24,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:95": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 95
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.institutionLabel",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 176,
+          "properties": {
+            "fontSize": {
+              "line": 178,
+              "col": 14,
+              "endCol": 16,
+              "raw": "10"
+            },
+            "letterSpacing": {
+              "line": 180,
+              "col": 19,
+              "endCol": 22,
+              "raw": "1.2"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:96": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 96
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.institutionDept",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 182,
+          "properties": {
+            "fontSize": {
+              "line": 184,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "marginTop": {
+              "line": 186,
+              "col": 15,
+              "endCol": 16,
+              "raw": "4"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:99": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 99
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.navScroll",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 188,
+          "properties": {
+            "flex": {
+              "line": 189,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:100": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 100
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.sectionLabel",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 191,
+          "properties": {
+            "fontSize": {
+              "line": 193,
+              "col": 14,
+              "endCol": 16,
+              "raw": "10"
+            },
+            "letterSpacing": {
+              "line": 195,
+              "col": 19,
+              "endCol": 20,
+              "raw": "1"
+            },
+            "marginBottom": {
+              "line": 196,
+              "col": 18,
+              "endCol": 19,
+              "raw": "8"
+            },
+            "marginTop": {
+              "line": 197,
+              "col": 15,
+              "endCol": 16,
+              "raw": "4"
+            },
+            "paddingHorizontal": {
+              "line": 198,
+              "col": 23,
+              "endCol": 24,
+              "raw": "8"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:110": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 110
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.sectionLabel",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 191,
+          "properties": {
+            "fontSize": {
+              "line": 193,
+              "col": 14,
+              "endCol": 16,
+              "raw": "10"
+            },
+            "letterSpacing": {
+              "line": 195,
+              "col": 19,
+              "endCol": 20,
+              "raw": "1"
+            },
+            "marginBottom": {
+              "line": 196,
+              "col": 18,
+              "endCol": 19,
+              "raw": "8"
+            },
+            "marginTop": {
+              "line": 197,
+              "col": 15,
+              "endCol": 16,
+              "raw": "4"
+            },
+            "paddingHorizontal": {
+              "line": 198,
+              "col": 23,
+              "endCol": 24,
+              "raw": "8"
+            }
+          }
+        },
+        {
+          "origin": "stylesheet",
+          "ref": "styles.sectionLabelSpaced",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 200,
+          "properties": {
+            "marginTop": {
+              "line": 201,
+              "col": 15,
+              "endCol": 17,
+              "raw": "20"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:121": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 121
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.footer",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 255,
+          "properties": {
+            "paddingTop": {
+              "line": 256,
+              "col": 16,
+              "endCol": 18,
+              "raw": "16"
+            },
+            "marginTop": {
+              "line": 257,
+              "col": 15,
+              "endCol": 16,
+              "raw": "8"
+            },
+            "borderTopWidth": {
+              "line": 258,
+              "col": 20,
+              "endCol": 21,
+              "raw": "1"
+            },
+            "gap": {
+              "line": 260,
+              "col": 9,
+              "endCol": 11,
+              "raw": "12"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:122": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 122
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.footerUser",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 262,
+          "properties": {
+            "flexDirection": {
+              "line": 263,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 264,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 265,
+              "col": 9,
+              "endCol": 11,
+              "raw": "10"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:123": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 123
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.avatar",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 267,
+          "properties": {
+            "width": {
+              "line": 268,
+              "col": 11,
+              "endCol": 13,
+              "raw": "36"
+            },
+            "height": {
+              "line": 269,
+              "col": 12,
+              "endCol": 14,
+              "raw": "36"
+            },
+            "borderRadius": {
+              "line": 270,
+              "col": 18,
+              "endCol": 20,
+              "raw": "18"
+            },
+            "alignItems": {
+              "line": 272,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 273,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:126": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 126
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.footerInfo",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 275,
+          "properties": {
+            "flex": {
+              "line": 276,
+              "col": 10,
+              "endCol": 11,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:127": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 127
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.footerName",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 278,
+          "properties": {
+            "fontSize": {
+              "line": 280,
+              "col": 14,
+              "endCol": 16,
+              "raw": "13"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:130": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 130
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.footerRole",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 283,
+          "properties": {
+            "fontSize": {
+              "line": 285,
+              "col": 14,
+              "endCol": 16,
+              "raw": "11"
+            },
+            "marginTop": {
+              "line": 287,
+              "col": 15,
+              "endCol": 16,
+              "raw": "2"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:135": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 135
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.logoutButton",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 289,
+          "properties": {
+            "flexDirection": {
+              "line": 290,
+              "col": 19,
+              "endCol": 24,
+              "raw": "'row'"
+            },
+            "alignItems": {
+              "line": 291,
+              "col": 16,
+              "endCol": 24,
+              "raw": "'center'"
+            },
+            "justifyContent": {
+              "line": 292,
+              "col": 20,
+              "endCol": 28,
+              "raw": "'center'"
+            },
+            "gap": {
+              "line": 293,
+              "col": 9,
+              "endCol": 10,
+              "raw": "8"
+            },
+            "paddingVertical": {
+              "line": 294,
+              "col": 21,
+              "endCol": 23,
+              "raw": "10"
+            },
+            "paddingHorizontal": {
+              "line": 295,
+              "col": 23,
+              "endCol": 25,
+              "raw": "12"
+            },
+            "borderRadius": {
+              "line": 296,
+              "col": 18,
+              "endCol": 20,
+              "raw": "10"
+            },
+            "borderWidth": {
+              "line": 298,
+              "col": 17,
+              "endCol": 18,
+              "raw": "1"
+            }
+          }
+        }
+      ]
+    },
+    "AdminSidebar@components/admin/admin-sidebar.tsx:141": {
+      "element": {
+        "file": "components/admin/admin-sidebar.tsx",
+        "line": 141
+      },
+      "styles": [
+        {
+          "origin": "stylesheet",
+          "ref": "styles.logoutButtonText",
+          "file": "components/admin/admin-sidebar.tsx",
+          "defLine": 301,
+          "properties": {
+            "fontSize": {
+              "line": 303,
               "col": 14,
               "endCol": 16,
               "raw": "13"
