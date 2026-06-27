@@ -54,19 +54,50 @@ export function AuthScreen({
           email: email.trim(),
           password,
         });
-        if (error) throw error;
+        if (error) {
+          if (error.message.toLowerCase().includes('email not confirmed')) {
+            setFeedback({
+              type: 'info',
+              message:
+                'Votre adresse email n\'est pas encore confirmée. Consultez votre boîte mail et cliquez sur le lien de validation, puis reconnectez-vous.',
+            });
+            return;
+          }
+          throw error;
+        }
       } else {
-        const { error } = await supabase.auth.signUp({
+        const emailRedirectTo =
+          Platform.OS === 'web' && typeof window !== 'undefined'
+            ? `${window.location.origin}/login`
+            : undefined;
+
+        const { data, error } = await supabase.auth.signUp({
           email: email.trim(),
           password,
+          options: emailRedirectTo ? { emailRedirectTo } : undefined,
         });
         if (error) throw error;
-        setFeedback({
-          type: 'success',
-          message: 'Compte créé avec succès. Vous pouvez vous connecter.',
-        });
-        setIsLogin(true);
-        setPassword('');
+
+        if (data.user?.identities?.length === 0) {
+          setFeedback({
+            type: 'info',
+            message:
+              'Un compte existe déjà avec cette adresse email. Connectez-vous ou utilisez « Mot de passe oublié ».',
+          });
+          setIsLogin(true);
+          setPassword('');
+          return;
+        }
+
+        if (!data.session) {
+          setFeedback({
+            type: 'info',
+            message: `Un email de confirmation a été envoyé à ${email.trim()}. Ouvrez-le et cliquez sur le lien pour activer votre compte, puis connectez-vous.`,
+          });
+          setIsLogin(true);
+          setPassword('');
+          return;
+        }
       }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : "Erreur d'authentification";
