@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alert'I — Architecture 4 Agents</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .slide {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .logo span { color: #3b82f6; }
+
+    .tagline {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+
+    .theme-badge {
+      display: inline-block;
+      margin-top: 1rem;
+      padding: 0.4rem 1rem;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #93c5fd;
+    }
+
+    .pipeline {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-bottom: 2rem;
+    }
+
+    .arrow {
+      display: flex;
+      align-items: center;
+      padding: 0 0.5rem;
+      color: #475569;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .agent-card {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 1.5rem;
+      position: relative;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .agent-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+
+    .agent-number {
+      position: absolute;
+      top: -12px;
+      left: 1rem;
+      background: #3b82f6;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .agent-icon {
+      font-size: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .agent-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.25rem;
+    }
+
+    .agent-role {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #3b82f6;
+      margin-bottom: 0.75rem;
+    }
+
+    .agent-desc {
+      font-size: 0.85rem;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+
+    .agent-tech {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: #64748b;
+      font-family: "SF Mono", Monaco, monospace;
+    }
+
+    .outputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .output-card {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 12px;
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .output-card.institution {
+      background: rgba(59, 130, 246, 0.08);
+      border-color: rgba(59, 130, 246, 0.25);
+    }
+
+    .output-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #64748b;
+      margin-bottom: 0.25rem;
+    }
+
+    .output-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #475569;
+    }
+
+    .stack {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .stack span {
+      background: rgba(255,255,255,0.06);
+      padding: 0.3rem 0.75rem;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: #94a3b8;
+    }
+
+    @media (max-width: 900px) {
+      .pipeline { flex-direction: column; }
+      .arrow { transform: rotate(90deg); justify-content: center; padding: 0.25rem 0; }
+      .outputs { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      body { background: #0f172a; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <div class="header">
+      <div class="logo">Alert<span>'</span>I</div>
+      <div class="tagline">Intelligence collective des savoirs locaux face aux inondations</div>
+      <div class="theme-badge">IA Challenge — Gestion intelligente des connaissances locales africaines</div>
+    </div>
+
+    <div class="pipeline">
+      <div class="agent-card">
+        <div class="agent-number">1</div>
+        <div class="agent-icon">📥</div>
+        <div class="agent-role">Agent Collecte</div>
+        <div class="agent-name">Terrain &amp; Citoyens</div>
+        <div class="agent-desc">
+          Formulaires citoyens, entretiens structurés (7 étapes), signalements SOS géolocalisés avec photos.
+        </div>
+        <div class="agent-tech">knowledge/ · sos/ · field_interviews</div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="agent-card">
+        <div class="agent-number">2</div>
+        <div class="agent-icon">🗂️</div>
+        <div class="agent-role">Agent Structuration</div>
+        <div class="agent-name">Validation &amp; Index</div>
+        <div class="agent-desc">
+          Modération institutionnelle, scoring de confiance, cartographie OSM, indexation par quartier et catégorie.
+        </div>
+        <div class="agent-tech">gov-dashboard · community_knowledge</div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="agent-card">
+        <div class="agent-number">3</div>
+        <div class="agent-icon">💬</div>
+        <div class="agent-role">Agent Orientation</div>
+        <div class="agent-name">Aminata (RAG + Gemini)</div>
+        <div class="agent-desc">
+          Retrieval hybride sur fiches validées, réponses ancrées avec citations de sources communautaires.
+        </div>
+        <div class="agent-tech">agent-orientation · Gemini 2.0 Flash</div>
+      </div>
+
+      <div class="arrow">→</div>
+
+      <div class="agent-card">
+        <div class="agent-number">4</div>
+        <div class="agent-icon">🚨</div>
+        <div class="agent-role">Agent Alerte</div>
+        <div class="agent-name">Analyse &amp; Notification</div>
+        <div class="agent-desc">
+          Agrège SOS récents et zones à risque, génère alertes IA pour institutions et résidents.
+        </div>
+        <div class="agent-tech">agent-alerte · alertes_ia</div>
+      </div>
+    </div>
+
+    <div class="outputs">
+      <div class="output-card">
+        <div class="output-label">Bénéficiaire</div>
+        <div class="output-title">👥 Citoyens informés &amp; résilients</div>
+      </div>
+      <div class="output-card institution">
+        <div class="output-label">Bénéficiaire</div>
+        <div class="output-title">🏛️ DNE / DPC — Supervision en temps réel</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Cas pilote : Bamako, Mali — Fleuve Niger</div>
+      <div class="stack">
+        <span>Expo / React Native</span>
+        <span>Supabase</span>
+        <span>Gemini 2.0 Flash</span>
+        <span>Web + Mobile</span>
+        <span>OpenStreetMap</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
