@@ -1,0 +1,27 @@
+export const Colors = {
+  primary: '#1f79eb',
+  primaryLight: '#4a96f5',
+  primaryDark: '#1560c0',
+  alert: '#FF6B35',
+  critical: '#E63946',
+  success: '#2DC653',
+  background: '#F4F7FB',
+  white: '#FFFFFF',
+  card: '#FFFFFF',
+  text: '#1A2138',
+  textSecondary: '#6B7A99',
+  textTertiary: '#9BA8C0',
+  border: '#E8EDF5',
+  borderLight: '#F0F3F9',
+  shadow: 'rgba(15, 25, 51, 0.06)',
+  shadowDark: 'rgba(15, 25, 51, 0.12)',
+  // Priority colors
+  prioriteFaible: '#2DC653',
+  prioriteMoyenne: '#FF6B35',
+  prioriteHaute: '#E63946',
+  prioriteCritique: '#9B1B30',
+  // Map pin colors
+  pinKnowledge: '#1f79eb',
+  pinSos: '#FF6B35',
+  pinSensor: '#2DC653',
+} as const;
