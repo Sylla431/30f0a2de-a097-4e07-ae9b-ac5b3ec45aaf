@@ -144,6 +144,7 @@ ${clusterJs}
           'alert-circle': '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512"><path fill="white" d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm-16 104h32v160h-32V152zm16 224c-13.3 0-24-10.7-24-24s10.7-24 24-24 24 10.7 24 24-10.7 24-24 24z"/></svg>',
           'person': '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512"><path fill="white" d="M256 256c52.8 0 96-43.2 96-96s-43.2-96-96-96-96 43.2-96 96 43.2 96 96 96zm0 48c-63.6 0-192 32.4-192 96v48h384v-48c0-63.6-128.4-96-192-96z"/></svg>',
           'book': '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512"><path fill="white" d="M256 64L128 112v256l128-48 128 48V112L256 64zm-16 48v192l-80 30V142l80-30zm32 0l80 30v192l-80-30V112z"/></svg>',
+          'radio': '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512"><path fill="white" d="M256 48C141.1 48 48 141.1 48 256s93.1 208 208 208 208-93.1 208-208S370.9 48 256 48zm0 352c-79.5 0-144-64.5-144-144s64.5-144 144-144 144 64.5 144 144-64.5 144-144 144zm0-224c-44.2 0-80 35.8-80 80s35.8 80 80 80 80-35.8 80-80-35.8-80-80-80z"/></svg>',
           'flash': '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 512 512"><path fill="white" d="M288 32L128 256h112l-48 224 208-288H288l48-160z"/></svg>',
         };
         return icons[iconName] || icons['warning'];
@@ -201,8 +202,11 @@ export default function OsmMap({ pins, center, zoom, onPinPress, enableClusterin
   const handleMessage = useCallback(
     (event: MessageEvent) => {
       try {
-        if (typeof event.data !== 'string') return;
-        const data = JSON.parse(event.data);
+        const iframeWindow = iframeRef.current?.contentWindow;
+        if (iframeWindow && event.source && event.source !== iframeWindow) return;
+
+        const raw = event.data;
+        const data = typeof raw === 'string' ? JSON.parse(raw) : raw;
         if (data && data.type === 'PIN_PRESS' && data.pinId && onPinPress) {
           onPinPress(data.pinId);
         }

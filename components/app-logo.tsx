@@ -9,25 +9,26 @@ interface AppLogoProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const SIZES = {
-  auth: { width: 280, height: 88 },
-  sidebar: { width: 200, height: 64 },
-} as const;
-
 export function AppLogo({ variant = 'auth', style }: AppLogoProps) {
-  const size = SIZES[variant];
+  if (variant === 'sidebar') {
+    return (
+      <View style={styles.sidebarWrap}>
+        <Image
+          source={LOGO_SOURCE}
+          style={styles.sidebarImage}
+          contentFit="contain"
+          contentPosition="center"
+          accessibilityLabel={APP_NAME}
+        />
+      </View>
+    );
+  }
 
   return (
-    <View
-      style={[
-        styles.wrap,
-        variant === 'sidebar' && styles.wrapSidebar,
-        style,
-      ]}
-    >
+    <View style={[styles.wrap, style]}>
       <Image
         source={LOGO_SOURCE}
-        style={size}
+        style={styles.authImage}
         contentFit="contain"
         accessibilityLabel={APP_NAME}
       />
@@ -40,11 +41,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  wrapSidebar: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    alignSelf: 'stretch',
+  authImage: {
+    width: 280,
+    height: 88,
+  },
+  sidebarWrap: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  sidebarImage: {
+    width: 200,
+    height: 72,
   },
 });

@@ -10,6 +10,8 @@ import {
   Alert,
   Platform,
   useWindowDimensions,
+  Modal,
+  Pressable,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -20,6 +22,7 @@ import { BAMAKO_CENTER, QUARTIERS } from '@/constants/Quartiers';
 import { supabase } from '@/lib/supabase';
 import { withTimeout } from '@/lib/with-timeout';
 import OsmMap from '@/components/osm-map';
+import { matchesQuartier } from '@/lib/quartier-utils';
 import type { SosSignal, Sensor, CommunityKnowledge } from '@/store/types';
 import { useAppStore } from '@/store/useAppStore';
 
@@ -179,6 +182,22 @@ const MOCK_KNOWLEDGE: CommunityKnowledge[] = [
 
 type TabKey = 'overview' | 'sos' | 'sensors' | 'moderation' | 'actions';
 
+type GovMapPinMeta =
+  | { kind: 'sos'; item: SosSignal }
+  | { kind: 'sensor'; item: Sensor }
+  | { kind: 'knowledge'; item: CommunityKnowledge };
+
+interface GovMapPin {
+  id: string;
+  latitude: number;
+  longitude: number;
+  color: string;
+  icon: string;
+  layer: string;
+  size?: number;
+  meta: GovMapPinMeta;
+}
+
 export default function GovDashboardScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
@@ -210,6 +229,7 @@ export default function GovDashboardScreen() {
   const [officialAlertLevel, setOfficialAlertLevel] = useState<'vigilance' | 'alerte' | 'urgence' | 'aucune'>('aucune');
   const [alertMessage, setAlertMessage] = useState('');
   const [alertLogs, setAlertLogs] = useState<string[]>([]);
+  const [selectedMapPin, setSelectedMapPin] = useState<GovMapPinMeta | null>(null);
 
   // Charger les données de Supabase ou utiliser les mocks
   const loadData = useCallback(async () => {
@@ -277,29 +297,32 @@ export default function GovDashboardScreen() {
   // Filtrer les données en fonction du quartier sélectionné
   const filteredSos = useMemo(() => {
     if (!selectedQuartier) return sosSignals;
-    return sosSignals.filter(s => s.quartier === selectedQuartier);
+    return sosSignals.filter((s) =>
+      matchesQuartier(s.quartier, (s as SosSignal & { commune?: string }).commune, selectedQuartier)
+    );
   }, [sosSignals, selectedQuartier]);
 
   const filteredSensors = useMemo(() => {
     if (!selectedQuartier) return sensors;
-    return sensors.filter(s => s.quartier === selectedQuartier);
+    return sensors.filter((s) => matchesQuartier(s.quartier, null, selectedQuartier));
   }, [sensors, selectedQuartier]);
 
   const filteredKnowledge = useMemo(() => {
     if (!selectedQuartier) return knowledge;
-    return knowledge.filter(k => k.quartier === selectedQuartier);
+    return knowledge.filter((k) =>
+      matchesQuartier(k.quartier, (k as CommunityKnowledge & { commune?: string }).commune, selectedQuartier)
+    );
   }, [knowledge, selectedQuartier]);
 
   // Formater les épingles pour la carte OSM
-  const mapPins = useMemo(() => {
-    const pins: any[] = [];
+  const govMapPins = useMemo((): GovMapPin[] => {
+    const pins: GovMapPin[] = [];
 
-    // Épingles SOS (Rouges / Orange)
     filteredSos.forEach((sos) => {
       if (sos.latitude && sos.longitude) {
         const currentStatus = sosStatuses[sos.id] || 'nouveau';
-        if (currentStatus === 'resolu') return; // Ne pas afficher les résolus sur la carte d'urgence
-        
+        if (currentStatus === 'resolu') return;
+
         pins.push({
           id: `sos_${sos.id}`,
           latitude: sos.latitude,
@@ -308,14 +331,17 @@ export default function GovDashboardScreen() {
           icon: 'warning',
           layer: 'signalements',
           size: sos.priorite === 'critique' ? 32 : 26,
+          meta: { kind: 'sos', item: sos },
         });
       }
     });
 
-    // Épingles Capteurs (Vert / Orange en fonction du niveau)
     filteredSensors.forEach((sensor) => {
       if (sensor.latitude && sensor.longitude) {
-        const level = simulatedSensorLevels[sensor.id] !== undefined ? simulatedSensorLevels[sensor.id] : sensor.niveau_eau;
+        const level =
+          simulatedSensorLevels[sensor.id] !== undefined
+            ? simulatedSensorLevels[sensor.id]
+            : sensor.niveau_eau;
         const isAlert = level > 2.0;
 
         pins.push({
@@ -326,11 +352,11 @@ export default function GovDashboardScreen() {
           icon: 'radio',
           layer: 'capteurs',
           size: 28,
+          meta: { kind: 'sensor', item: sensor },
         });
       }
     });
 
-    // Épingles Savoirs communautaires (Bleu)
     filteredKnowledge.forEach((k) => {
       if (k.latitude && k.longitude && !k.validated && !k.valide) {
         pins.push({
@@ -341,12 +367,35 @@ export default function GovDashboardScreen() {
           icon: 'book',
           layer: 'savoir',
           size: 24,
+          meta: { kind: 'knowledge', item: k },
         });
       }
     });
 
     return pins;
   }, [filteredSos, filteredSensors, filteredKnowledge, sosStatuses, simulatedSensorLevels]);
+
+  const mapPins = useMemo(
+    () =>
+      govMapPins.map(({ id, latitude, longitude, color, icon, layer, size }) => ({
+        id,
+        latitude,
+        longitude,
+        color,
+        icon,
+        layer,
+        size,
+      })),
+    [govMapPins]
+  );
+
+  const handleMapPinPress = useCallback(
+    (pinId: string) => {
+      const pin = govMapPins.find((p) => p.id === pinId);
+      if (pin) setSelectedMapPin(pin.meta);
+    },
+    [govMapPins]
+  );
 
   // Gérer la prise en charge d'un signalement SOS
   const handleUpdateSosStatus = useCallback(async (id: string, newStatus: 'en_cours' | 'resolu') => {
@@ -706,6 +755,7 @@ export default function GovDashboardScreen() {
               zoom={11.8}
               enableClustering={false}
               style={styles.mapIframe}
+              onPinPress={handleMapPinPress}
             />
           </View>
         </View>
@@ -1187,7 +1237,12 @@ export default function GovDashboardScreen() {
         {/* Filtre de quartier */}
         <View style={styles.headerRight}>
           <Ionicons name="filter" size={16} color={DashboardColors.slate600} />
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.filterScroll}>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.filterScroll}
+            contentContainerStyle={styles.filterScrollContent}
+          >
             <TouchableOpacity
               style={[styles.filterChip, selectedQuartier === null && styles.filterChipActive]}
               onPress={() => setSelectedQuartier(null)}
@@ -1201,7 +1256,7 @@ export default function GovDashboardScreen() {
               <TouchableOpacity
                 key={q}
                 style={[styles.filterChip, selectedQuartier === q && styles.filterChipActive]}
-                onPress={() => setSelectedQuartier(q)}
+                onPress={() => setSelectedQuartier((prev) => (prev === q ? null : q))}
                 activeOpacity={0.7}
               >
                 <Text style={[styles.filterChipText, selectedQuartier === q && styles.filterChipTextActive]}>
@@ -1239,6 +1294,118 @@ export default function GovDashboardScreen() {
             renderTabContent()
           )}
         </View>
+      </View>
+
+      <Modal visible={!!selectedMapPin} transparent animationType="fade">
+        <Pressable style={styles.mapPinModalOverlay} onPress={() => setSelectedMapPin(null)}>
+          <View style={styles.mapPinPopup} onStartShouldSetResponder={() => true}>
+            {selectedMapPin ? (
+              <GovMapPinDetail
+                pin={selectedMapPin}
+                sosStatus={
+                  selectedMapPin.kind === 'sos'
+                    ? sosStatuses[selectedMapPin.item.id] || 'nouveau'
+                    : undefined
+                }
+                sensorLevel={
+                  selectedMapPin.kind === 'sensor'
+                    ? simulatedSensorLevels[selectedMapPin.item.id] ?? selectedMapPin.item.niveau_eau
+                    : undefined
+                }
+                onClose={() => setSelectedMapPin(null)}
+              />
+            ) : null}
+          </View>
+        </Pressable>
+      </Modal>
+    </View>
+  );
+}
+
+function GovMapPinDetail({
+  pin,
+  sosStatus,
+  sensorLevel,
+  onClose,
+}: {
+  pin: GovMapPinMeta;
+  sosStatus?: 'nouveau' | 'en_cours' | 'resolu';
+  sensorLevel?: number;
+  onClose: () => void;
+}) {
+  if (pin.kind === 'sos') {
+    const sos = pin.item;
+    return (
+      <View style={styles.mapPinContent}>
+        <View style={styles.mapPinHeader}>
+          <View style={[styles.mapPinBadge, { backgroundColor: Colors.critical }]}>
+            <Text style={styles.mapPinBadgeText}>SOS</Text>
+          </View>
+          <TouchableOpacity onPress={onClose} hitSlop={12}>
+            <Ionicons name="close" size={22} color={Colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.mapPinTitle}>{sos.type.replace(/_/g, ' ').toUpperCase()}</Text>
+        <Text style={styles.mapPinDescription}>{sos.description}</Text>
+        <View style={styles.mapPinMetaRow}>
+          <Ionicons name="location-outline" size={14} color={Colors.textSecondary} />
+          <Text style={styles.mapPinMetaText}>{sos.quartier || 'Quartier inconnu'}</Text>
+        </View>
+        <View style={styles.mapPinMetaRow}>
+          <Ionicons name="flag-outline" size={14} color={Colors.textSecondary} />
+          <Text style={styles.mapPinMetaText}>Priorité : {sos.priorite}</Text>
+        </View>
+        <View style={styles.mapPinMetaRow}>
+          <Ionicons name="pulse-outline" size={14} color={Colors.textSecondary} />
+          <Text style={styles.mapPinMetaText}>Statut : {sosStatus?.replace('_', ' ') ?? 'nouveau'}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  if (pin.kind === 'sensor') {
+    const sensor = pin.item;
+    const level = sensorLevel ?? sensor.niveau_eau;
+    return (
+      <View style={styles.mapPinContent}>
+        <View style={styles.mapPinHeader}>
+          <View style={[styles.mapPinBadge, { backgroundColor: Colors.success }]}>
+            <Text style={styles.mapPinBadgeText}>Capteur</Text>
+          </View>
+          <TouchableOpacity onPress={onClose} hitSlop={12}>
+            <Ionicons name="close" size={22} color={Colors.textSecondary} />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.mapPinTitle}>{sensor.nom}</Text>
+        <Text style={styles.mapPinDescription}>
+          Niveau d&apos;eau : {level.toFixed(2)} m — {level > 2 ? 'Alerte' : 'Normal'}
+        </Text>
+        <View style={styles.mapPinMetaRow}>
+          <Ionicons name="location-outline" size={14} color={Colors.textSecondary} />
+          <Text style={styles.mapPinMetaText}>{sensor.quartier}</Text>
+        </View>
+      </View>
+    );
+  }
+
+  const knowledge = pin.item;
+  return (
+    <View style={styles.mapPinContent}>
+      <View style={styles.mapPinHeader}>
+        <View style={[styles.mapPinBadge, { backgroundColor: Colors.primary }]}>
+          <Text style={styles.mapPinBadgeText}>Savoir</Text>
+        </View>
+        <TouchableOpacity onPress={onClose} hitSlop={12}>
+          <Ionicons name="close" size={22} color={Colors.textSecondary} />
+        </TouchableOpacity>
+      </View>
+      <Text style={styles.mapPinTitle}>{knowledge.titre || 'Savoir communautaire'}</Text>
+      <Text style={styles.mapPinDescription} numberOfLines={4}>
+        {knowledge.contenu || knowledge.description || 'Aucune description'}
+      </Text>
+      <View style={styles.mapPinMetaRow}>
+        <Ionicons name="location-outline" size={14} color={Colors.textSecondary} />
+        <Text style={styles.mapPinMetaText}>{knowledge.quartier || 'Quartier inconnu'}</Text>
       </View>
     </View>
   );
@@ -1289,14 +1456,24 @@ const styles = StyleSheet.create({
     color: DashboardColors.slate900,
   },
   headerRight: {
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    maxWidth: '100%',
+    justifyContent: 'flex-end',
+    minWidth: 0,
   },
   filterScroll: {
-    flexGrow: 0,
-    maxWidth: 240,
+    flex: 1,
+    flexGrow: 1,
+    minWidth: 0,
+    maxWidth: Platform.OS === 'web' ? 560 : 300,
+  },
+  filterScrollContent: {
+    alignItems: 'center',
+    paddingVertical: 2,
+    paddingRight: 8,
+    gap: 6,
   },
   filterChip: {
     paddingHorizontal: 12,
@@ -2121,5 +2298,73 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.semiBold,
     fontSize: 14,
     color: Colors.white,
+  },
+  mapPinModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(15, 23, 42, 0.45)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+    ...Platform.select({
+      web: {
+        position: 'fixed' as unknown as 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10000,
+      },
+      default: {},
+    }),
+  },
+  mapPinPopup: {
+    width: '100%',
+    maxWidth: 460,
+    backgroundColor: Colors.white,
+    borderRadius: 20,
+    padding: 20,
+    boxShadow: '0 16px 48px rgba(15, 25, 51, 0.18)',
+    ...Platform.select({ android: { elevation: 12 } as object, default: {} }),
+  },
+  mapPinContent: {
+    gap: 10,
+    paddingBottom: 8,
+  },
+  mapPinHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  mapPinBadge: {
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    borderRadius: 8,
+  },
+  mapPinBadgeText: {
+    fontFamily: Fonts.bold,
+    fontSize: 11,
+    color: Colors.white,
+    letterSpacing: 0.5,
+  },
+  mapPinTitle: {
+    fontFamily: Fonts.bold,
+    fontSize: 18,
+    color: Colors.text,
+  },
+  mapPinDescription: {
+    fontFamily: Fonts.regular,
+    fontSize: 14,
+    color: Colors.textSecondary,
+    lineHeight: 20,
+  },
+  mapPinMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  mapPinMetaText: {
+    fontFamily: Fonts.medium,
+    fontSize: 13,
+    color: Colors.textSecondary,
   },
 });

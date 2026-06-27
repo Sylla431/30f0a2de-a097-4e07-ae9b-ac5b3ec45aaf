@@ -13,7 +13,7 @@ export interface AdminNavItem {
   badgeKey?: 'alertes';
 }
 
-export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
+export const ADMIN_OPERATIONS_NAV: AdminNavItem[] = [
   {
     href: '/(tabs)/map',
     label: 'Carte opérationnelle',
@@ -21,6 +21,10 @@ export const ADMIN_NAV_ITEMS: AdminNavItem[] = [
     icon: 'map-outline',
     segment: 'map',
   },
+];
+
+/** Onglets citoyens — non affichés dans la sidebar admin */
+export const ADMIN_CITIZEN_NAV: AdminNavItem[] = [
   {
     href: '/(tabs)/sos',
     label: 'Signalements SOS',
@@ -70,7 +74,7 @@ export const ADMIN_SECONDARY_NAV: AdminNavItem[] = [
 ];
 
 export function getAdminPageTitle(pathname: string): string {
-  const all = [...ADMIN_NAV_ITEMS, ...ADMIN_SECONDARY_NAV];
+  const all = [...ADMIN_OPERATIONS_NAV, ...ADMIN_SECONDARY_NAV, ...ADMIN_CITIZEN_NAV];
   const match = all.find((item) => pathname.includes(item.segment));
   return match?.label ?? APP_NAME;
 }

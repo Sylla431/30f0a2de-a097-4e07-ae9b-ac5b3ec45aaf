@@ -53,7 +53,7 @@ const floatingPanel = {
   borderRadius: DASHBOARD_SIDEBAR_RADIUS,
   overflow: 'hidden' as const,
   backgroundColor: DashboardColors.sidebar,
-  boxShadow: '0 12px 32px rgba(15, 23, 42, 0.18)',
+  boxShadow: '0 8px 24px rgba(15, 23, 42, 0.1)',
 };
 
 const styles = StyleSheet.create({

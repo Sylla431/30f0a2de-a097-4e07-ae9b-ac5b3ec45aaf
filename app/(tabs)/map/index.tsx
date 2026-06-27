@@ -383,14 +383,10 @@ export default function MapScreen() {
         </View>
       </View>
 
-      {/* Bottom sheet modal for pin details */}
-      <Modal visible={!!selectedPin} transparent animationType="slide">
+      {/* Popup détail pin */}
+      <Modal visible={!!selectedPin} transparent animationType="fade">
         <Pressable style={styles.modalOverlay} onPress={() => setSelectedPin(null)}>
-          <View
-            style={[styles.bottomSheet, { paddingBottom: insets.bottom + 16 }]}
-            onStartShouldSetResponder={() => true}
-          >
-            <View style={styles.sheetHandle} />
+          <View style={styles.popupCard} onStartShouldSetResponder={() => true}>
             {selectedPin && (
               <PinDetail
                 pin={selectedPin}
@@ -862,24 +858,28 @@ const styles = StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.45)',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 24,
+    ...Platform.select({
+      web: {
+        position: 'fixed' as unknown as 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        zIndex: 10000,
+      },
+      default: {},
+    }),
   },
-  bottomSheet: {
+  popupCard: {
+    width: '100%',
+    maxWidth: 440,
     backgroundColor: Colors.white,
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderRadius: 20,
     padding: 20,
-    paddingTop: 14,
-    minHeight: 220,
-    boxShadow: '0 -4px 20px rgba(0,0,0,0.12)',
-    ...Platform.select({ android: { elevation: 8 } as object, default: {} }),
-  },
-  sheetHandle: {
-    width: 36,
-    height: 4,
-    backgroundColor: Colors.border,
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginBottom: 14,
+    boxShadow: '0 16px 48px rgba(15, 25, 51, 0.18)',
+    ...Platform.select({ android: { elevation: 12 } as object, default: {} }),
   },
 });

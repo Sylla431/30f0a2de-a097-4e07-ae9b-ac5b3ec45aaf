@@ -3,7 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter, usePathname } from 'expo-router';
 import { DashboardColors } from '@/constants/Dashboard';
 import {
-  ADMIN_NAV_ITEMS,
+  ADMIN_OPERATIONS_NAV,
   ADMIN_SECONDARY_NAV,
   isNavItemActive,
   type AdminNavItem,
@@ -61,7 +61,6 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
   const pathname = usePathname();
   const profile = useAppStore((s) => s.profile);
   const session = useAppStore((s) => s.session);
-  const unreadAlertesCount = useAppStore((s) => s.unreadAlertesCount);
 
   const navigate = (href: string) => {
     router.push(href as never);
@@ -87,12 +86,11 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
 
       <ScrollView style={styles.navScroll} showsVerticalScrollIndicator={false}>
         <Text style={styles.sectionLabel}>OPÉRATIONS</Text>
-        {ADMIN_NAV_ITEMS.map((item) => (
+        {ADMIN_OPERATIONS_NAV.map((item) => (
           <NavButton
             key={item.href}
             item={item}
             active={isNavItemActive(pathname, item.segment)}
-            badge={item.badgeKey === 'alertes' ? unreadAlertesCount : undefined}
             onPress={() => navigate(item.href)}
           />
         ))}
@@ -110,7 +108,7 @@ export function AdminSidebar({ onNavigate }: AdminSidebarProps) {
 
       <View style={styles.footer}>
         <View style={styles.avatar}>
-          <Ionicons name="person" size={16} color={Colors.white} />
+          <Ionicons name="person" size={16} color={DashboardColors.accent} />
         </View>
         <View style={styles.footerInfo}>
           <Text style={styles.footerName} numberOfLines={1}>
@@ -131,19 +129,20 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: DashboardColors.sidebar,
-    paddingVertical: 20,
+    paddingTop: 16,
+    paddingBottom: 20,
     paddingHorizontal: 16,
   },
   brand: {
-    marginBottom: 20,
-    gap: 10,
+    marginBottom: 12,
+    gap: 4,
+    alignItems: 'center',
   },
   brandSubtitle: {
     fontFamily: Fonts.regular,
-    fontSize: 12,
+    fontSize: 11,
     color: DashboardColors.sidebarText,
-    marginTop: 2,
-    paddingHorizontal: 4,
+    textAlign: 'center',
   },
   institution: {
     paddingHorizontal: 4,
@@ -155,7 +154,7 @@ const styles = StyleSheet.create({
   institutionLabel: {
     fontFamily: Fonts.bold,
     fontSize: 10,
-    color: Colors.white,
+    color: DashboardColors.sidebarTextActive,
     letterSpacing: 1.2,
   },
   institutionDept: {
@@ -170,7 +169,7 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontFamily: Fonts.semiBold,
     fontSize: 10,
-    color: '#64748B',
+    color: DashboardColors.sidebarMuted,
     letterSpacing: 1,
     marginBottom: 8,
     marginTop: 4,
@@ -214,7 +213,7 @@ const styles = StyleSheet.create({
   navDescription: {
     fontFamily: Fonts.regular,
     fontSize: 11,
-    color: '#64748B',
+    color: DashboardColors.sidebarMuted,
   },
   badge: {
     backgroundColor: DashboardColors.danger,
@@ -254,12 +253,12 @@ const styles = StyleSheet.create({
   footerName: {
     fontFamily: Fonts.semiBold,
     fontSize: 13,
-    color: Colors.white,
+    color: DashboardColors.sidebarTextActive,
   },
   footerRole: {
     fontFamily: Fonts.regular,
     fontSize: 11,
-    color: '#64748B',
+    color: DashboardColors.sidebarMuted,
     marginTop: 2,
   },
 });
